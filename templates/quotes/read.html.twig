@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuotesController!{% endblock %}
+
+{% block quotesActive %}active{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 90%; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    .content-block div {
+        margin: 2rem 0;
+    }
+
+    .content-block div p {
+        margin: 0;
+        line-height: 2rem
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Présentation de la citation</h1>
+    <a href="{{ path('quotes_browse') }}" class="btn btn-primary">Retour à la liste des poésies</a>
+    {% if quote.displayable is not same as true %}
+        <p class="error-message" style="color: red; margin: 3rem 0; text-align: center">Il manque des informations pour pouvoir afficher la news sur le site !</p>
+        <ul>
+            {{ quote.author == null ? '<li>Manque l\'autrice/auteur</li>' }}
+            {{ quote.content == null ? '<li>Manque le contenu</li>' }}
+        </ul>
+    {% endif %}
+    <div style="display: flex; justify-content: center; margin: 2rem 0">
+        <form action="{{ path('quotes_edit', {id: quote.id}) }}" style="margin-right: 1rem" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+        </form>
+        <form action="{{ path('quotes_delete', {id: quote.id}) }}" onsubmit="return confirm('Supprimer Citation/Poésie {{ quote.author }} ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+    <h2 style="margin: 2rem 0">{{ quote.author }}</h2>
+    <div class="content-block" style="font-size: 1.3rem; line-height: 2rem; margin-bottom: 1.5rem;">{{ quote.content }}</div>
+    <div style="display: flex; justify-content: center; margin: 2rem 0">
+        <form action="{{ path('quotes_edit', {id: quote.id}) }}" style="margin-right: 1rem" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+            <button class="btn btn-warning">Modifier</button>
+        </form>
+        <form action="{{ path('quotes_delete', {id: quote.id}) }}" onsubmit="return confirm('Supprimer Citation de {{ quote.author }} ?')" method="POST">
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+    <a href="{{ path('quotes_browse') }}" class="btn btn-primary">Retour à la liste des poésies</a>
+</div>
+{% endblock %}

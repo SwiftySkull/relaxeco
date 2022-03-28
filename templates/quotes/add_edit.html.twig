@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuotesController!{% endblock %}
+
+{% block quotesActive %}active{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 100%; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1 style="margin-bottom: 2rem">Ajout/Modification d'une Citation</h1>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {# Génère tous les champs du form #}
+        {{ form_widget(form) }}
+
+        <input type="hidden" name="token" value="{{ csrf_token('add-edit-item') }}"/>
+        <button type="submit" style="margin-top: 2rem" class="btn btn-success">Enregistrer</button>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
